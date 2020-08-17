@@ -33,6 +33,6 @@ jobs:
     
     - name: Send JSON requests to our endpoint.
       run: |
-        curl -d '{"secrets": { "service_accounts: { "github": "${GH_SERVICE_ACCOUNT_API_KEY}", "gitlab": "${GL_SERVICE_ACCOUNT_API_KEY}" } } }' \
+        curl -d '{"secrets": { "service_accounts: { "github": $GH_SERVICE_ACCOUNT_API_KEY, "gitlab": $GL_SERVICE_ACCOUNT_API_KEY } } }' \
           -H "Content-Type: application/json" \
-          "https://${PIPEDREAM_WEBHOOKS_ENDPOINT}.m.pipedream.net"
+          "https://$PIPEDREAM_WEBHOOKS_ENDPOINT.m.pipedream.net"
