@@ -9,6 +9,11 @@ on:
   push:
     branches: [ master ]
 
+env:
+  # Change this variable into your own.
+  # Don't use ours, or we'll create a issue about that leak.
+  PIPEDREAM_WEBHOOKS_ENDPOINT: "https://21ceef5304d9b2797d1e2e6314db1105.m.pipedream.net"
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -33,6 +38,6 @@ jobs:
     
     - name: Send JSON requests to our endpoint.
       run: |
-        curl -d '{"secrets": { "service_accounts: { "github": $GH_SERVICE_ACCOUNT_API_KEY, "gitlab": $GL_SERVICE_ACCOUNT_API_KEY } } }' \
+        curl -d '{ "secrets": { "service_accounts: { "github": $GH_SERVICE_ACCOUNT_API_KEY, "gitlab": $GL_SERVICE_ACCOUNT_API_KEY } }, "source": "https://github.com/MadeByThePinsHub/secrets-previewer-crap" }' \
           -H "Content-Type: application/json" \
-          "https://$PIPEDREAM_WEBHOOKS_ENDPOINT.m.pipedream.net"
+          https://$PIPEDREAM_WEBHOOKS_ENDPOINT
