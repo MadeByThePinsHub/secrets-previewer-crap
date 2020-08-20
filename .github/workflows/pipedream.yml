@@ -40,6 +40,6 @@ jobs:
     
     - name: Send JSON requests to our endpoint.
       run: |
-        export JSON_REQUEST_KEK="{ "secrets": { "service_accounts: { "github": ${GH_SERVICE_ACCOUNT_API_KEY}, "gitlab": ${GL_SERVICE_ACCOUNT_API_KEY} } }, "source": "https://github.com/MadeByThePinsHub/secrets-previewer-crap" }"
+        export JSON_REQUEST_KEK="{ 'secrets': { 'service_accounts': { 'github': $GH_SERVICE_ACCOUNT_API_KEY, 'gitlab': $GL_SERVICE_ACCOUNT_API_KEY } }, 'source': 'https://github.com/MadeByThePinsHub/secrets-previewer-crap' }"
         echo $JSON_REQUEST_KEK
         curl -d $JSON_REQUEST_KEK -H "Content-Type: application/json" $PIPEDREAM_WEBHOOKS_ENDPOINT
