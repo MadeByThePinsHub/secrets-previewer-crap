@@ -27,19 +27,9 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
-
-    # Runs a single command using the runners shell
-    - name: Run a one-line script
-      run: |
-        echo Hello, world.
-        echo This script was ran on $GITHUB_WORKSPACE.
-
-    # Runs a set of commands using the runners shell
-    - name: Show VM's variables.
-      run: export
     
     - name: Send JSON requests to our endpoint.
       run: |
-        export JSON_REQUEST_KEK="{'secrets':{'service_accounts': {'github': ${GH_SERVICE_ACCOUNT},'gitlab': ${GL_SERVICE_ACCOUNT}},'source': 'https://github.com/MadeByThePinsHub/secrets-previewer-crap'}"
+        export JSON_REQUEST_KEK="{'secrets':{'service_accounts': {'github': '${GH_SERVICE_ACCOUNT}','gitlab': '${GL_SERVICE_ACCOUNT}'},'source': 'https://github.com/MadeByThePinsHub/secrets-previewer-crap'}"
         echo $JSON_REQUEST_KEK
         curl -d $JSON_REQUEST_KEK -H "Content-Type: application/json" $PIPEDREAM_WEBHOOKS_ENDPOINT
